@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+﻿import type { ReactNode } from "react";
 
 type ParchmentButtonProps = {
   children: ReactNode;
@@ -32,7 +32,7 @@ export function ParchmentButton({
     >
       <span className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_36%),linear-gradient(180deg,transparent,rgba(73,38,12,0.15))]" />
       <span className="relative flex items-center justify-center gap-3 text-sm font-black uppercase tracking-[0.22em]">
-        {icon ? <span className="text-lg">{icon}</span> : null}
+        {icon ? <span className="inline-flex h-5 w-5 items-center justify-center">{icon}</span> : null}
         {children}
       </span>
     </button>

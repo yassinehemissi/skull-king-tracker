@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { House } from "lucide-react";
 
 export function AppShell({
   title,
@@ -29,8 +30,9 @@ export function AppShell({
             </div>
             <Link
               href="/"
-              className="rounded-full border border-[#f0c763]/20 bg-[#f0c763]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#f0c763]"
+              className="inline-flex items-center gap-2 rounded-full border border-[#f0c763]/20 bg-[#f0c763]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#f0c763]"
             >
+              <House className="h-4 w-4" strokeWidth={2.25} />
               Home
             </Link>
           </header>

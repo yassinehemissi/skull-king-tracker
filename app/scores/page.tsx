@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { ArrowLeft, TableProperties } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { ParchmentButton } from "@/components/ParchmentButton";
@@ -32,7 +33,7 @@ function ScoresView() {
       title="Full Score Table"
       actions={
         <ParchmentButton
-          icon="<-"
+          icon={<ArrowLeft className="h-5 w-5" strokeWidth={2.5} />}
           onClick={() => router.push(currentGame.status === "finished" ? "/finished" : "/leaderboard")}
         >
           Back
@@ -40,7 +41,10 @@ function ScoresView() {
       }
     >
       <div className="mb-4 rounded-[1.3rem] border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-[#b3d0e4]">
-        Horizontal scroll is preserved for mobile. Round columns expand as the game progresses.
+        <div className="inline-flex items-center gap-2">
+          <TableProperties className="h-4 w-4" strokeWidth={2.25} />
+          Horizontal scroll is preserved for mobile. Round columns expand as the game progresses.
+        </div>
       </div>
       <ScoreTable columns={columns.length > 0 ? columns : ["R1"]} rows={rows} />
     </AppShell>

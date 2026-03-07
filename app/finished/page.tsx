@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { RotateCcw, TableProperties, Trophy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { ParchmentButton } from "@/components/ParchmentButton";
@@ -31,17 +32,19 @@ function FinishedView() {
       title="Game Over"
       actions={
         <div className="space-y-3">
-          <ParchmentButton icon="NEW" onClick={() => router.push("/setup")}>
+          <ParchmentButton icon={<RotateCcw className="h-5 w-5" strokeWidth={2.5} />} onClick={() => router.push("/setup")}>
             New Game
           </ParchmentButton>
-          <ParchmentButton icon="TAB" onClick={() => router.push("/scores")} variant="secondary">
+          <ParchmentButton icon={<TableProperties className="h-5 w-5" strokeWidth={2.5} />} onClick={() => router.push("/scores")} variant="secondary">
             View Full Table
           </ParchmentButton>
         </div>
       }
     >
       <div className="rounded-[1.8rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(243,200,94,0.22),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] p-5 text-center">
-        <div className="mb-4 text-5xl font-black text-[#f3c85e]">END</div>
+        <div className="mb-4 inline-flex rounded-full bg-[#f3c85e]/10 p-4 text-[#f3c85e]">
+          <Trophy className="h-10 w-10" strokeWidth={2.25} />
+        </div>
         <p className="font-display text-4xl text-[#fff0be]">{winner?.name ?? "Winner"} Wins!</p>
         <p className="mt-2 text-xs font-black uppercase tracking-[0.28em] text-[#f3c85e]">
           fireworks and pirate music hook here

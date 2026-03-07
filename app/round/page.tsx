@@ -1,5 +1,13 @@
-"use client";
+﻿"use client";
 
+import {
+  Calculator,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  EyeOff,
+  Gift,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
@@ -110,14 +118,9 @@ function RoundView({
     );
   }
 
-  function maybeAdvance(field: "bid" | "won", value: number) {
-    if (currentGame){
-      if (field === "won" && activeIndex < currentGame.players.length - 1) {
-        onActiveIndexChange(activeIndex + 1);
-      }
-    }
-    if (field === "bid" && value === 0) {
-      return;
+  function maybeAdvance(field: "bid" | "won") {
+    if (field === "won" && activeIndex < currentGame.players.length - 1) {
+      onActiveIndexChange(activeIndex + 1);
     }
   }
 
@@ -127,10 +130,19 @@ function RoundView({
       title={`Round ${currentGame.currentRound}`}
       actions={
         <div className="space-y-3 pb-4">
-          <ParchmentButton disabled={!reviewReady} icon="REV" onClick={onReviewToggle}>
+          <ParchmentButton
+            disabled={!reviewReady}
+            icon={showReview ? <EyeOff className="h-5 w-5" strokeWidth={2.5} /> : <Eye className="h-5 w-5" strokeWidth={2.5} />}
+            onClick={onReviewToggle}
+          >
             {showReview ? "Hide Review" : "Quick Review"}
           </ParchmentButton>
-          <ParchmentButton disabled={!reviewReady} icon="CALC" onClick={onSubmit} variant="secondary">
+          <ParchmentButton
+            disabled={!reviewReady}
+            icon={<Calculator className="h-5 w-5" strokeWidth={2.5} />}
+            onClick={onSubmit}
+            variant="secondary"
+          >
             Score Round
           </ParchmentButton>
         </div>
@@ -148,7 +160,7 @@ function RoundView({
         </div>
       </div>
 
-      <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
+      <div className="mb-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar">
         {currentGame.players.map((player, index) => {
           const entry = entries.find((item) => item.playerId === player.id);
           const isActive = index === activeIndex;
@@ -194,25 +206,25 @@ function RoundView({
           </div>
 
           <FastSelectRow
-            label="Bid"
             helper="Tap the predicted tricks"
-            value={activeEntry.bid}
+            label="Bid"
             max={cards}
             onSelect={(value) => {
               updateEntry(activePlayer.id, "bid", value);
-              maybeAdvance("bid", value);
+              maybeAdvance("bid");
             }}
+            value={activeEntry.bid}
           />
 
           <FastSelectRow
-            label="Won"
             helper="Tap tricks won, then move on"
-            value={activeEntry.won}
+            label="Won"
             max={cards}
             onSelect={(value) => {
               updateEntry(activePlayer.id, "won", value);
-              maybeAdvance("won", value);
+              maybeAdvance("won");
             }}
+            value={activeEntry.won}
           />
 
           <div className="mt-4 rounded-[1.35rem] border border-white/10 bg-white/5 p-3">
@@ -226,7 +238,7 @@ function RoundView({
                 </p>
               </div>
               <button
-                className="rounded-full border border-white/10 bg-[#102538] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#102538] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
                 onClick={() =>
                   setBonusOpen((current) => ({
                     ...current,
@@ -235,6 +247,7 @@ function RoundView({
                 }
                 type="button"
               >
+                <Gift className="h-3.5 w-3.5" strokeWidth={2.25} />
                 {bonusOpen[activePlayer.id] || activeEntry.bonus > 0 ? "Hide Bonus" : "Add Bonus"}
               </button>
             </div>
@@ -256,20 +269,22 @@ function RoundView({
 
           <div className="mt-4 flex gap-3">
             <button
-              className="flex-1 rounded-[1.25rem] border border-white/10 bg-white/5 px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[#d2ebf9] disabled:opacity-40"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-[1.25rem] border border-white/10 bg-white/5 px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[#d2ebf9] disabled:opacity-40"
               disabled={activeIndex === 0}
               onClick={() => onActiveIndexChange(Math.max(0, activeIndex - 1))}
               type="button"
             >
+              <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
               Previous
             </button>
             <button
-              className="flex-1 rounded-[1.25rem] bg-[#f3c85e] px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[#24170d] disabled:opacity-40"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-[1.25rem] bg-[#f3c85e] px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-[#24170d] disabled:opacity-40"
               disabled={activeIndex === currentGame.players.length - 1}
               onClick={() => onActiveIndexChange(Math.min(currentGame.players.length - 1, activeIndex + 1))}
               type="button"
             >
               Next Player
+              <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
             </button>
           </div>
         </section>
@@ -287,10 +302,11 @@ function RoundView({
               </p>
             </div>
             <button
-              className="rounded-full bg-white/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
+              className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
               onClick={onReviewToggle}
               type="button"
             >
+              <EyeOff className="h-3.5 w-3.5" strokeWidth={2.25} />
               Close
             </button>
           </div>
@@ -322,7 +338,8 @@ function RoundView({
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.16em] text-[#f3c85e]">
+                  <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-[#f3c85e]">
+                    <ChevronRight className="h-3.5 w-3.5" strokeWidth={2.25} />
                     Edit
                   </span>
                 </button>

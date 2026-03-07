@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { ArrowRight, Crown, TableProperties, Trophy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { Avatar } from "@/components/Avatar";
@@ -38,10 +39,13 @@ function ResultView() {
       title={`Round ${round.roundNumber} Summary`}
       actions={
         <div className="space-y-3">
-          <ParchmentButton icon={currentGame.status === "finished" ? "END" : "->"} onClick={() => router.push(nextAction)}>
+          <ParchmentButton
+            icon={currentGame.status === "finished" ? <Trophy className="h-5 w-5" strokeWidth={2.5} /> : <ArrowRight className="h-5 w-5" strokeWidth={2.5} />}
+            onClick={() => router.push(nextAction)}
+          >
             {nextLabel}
           </ParchmentButton>
-          <ParchmentButton icon="TAB" onClick={() => router.push("/scores")} variant="secondary">
+          <ParchmentButton icon={<TableProperties className="h-5 w-5" strokeWidth={2.5} />} onClick={() => router.push("/scores")} variant="secondary">
             Full Score Table
           </ParchmentButton>
         </div>
@@ -55,7 +59,8 @@ function ResultView() {
             </p>
             <p className="font-display text-2xl text-[#fff0be]">Keep The Table Moving</p>
           </div>
-          <div className="rounded-full bg-[#f3c85e]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#f3c85e]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]">
+            <Crown className="h-3.5 w-3.5" strokeWidth={2.25} />
             Ranked Live
           </div>
         </div>

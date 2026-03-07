@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { FolderOpen, Play, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { Avatar } from "@/components/Avatar";
@@ -9,8 +10,7 @@ import { getGameSubtitle, getLeaderboard } from "@/lib/game";
 
 export default function HomePage() {
   const router = useRouter();
-  const { games, currentGame, continueGame, deleteGame, hydrated } =
-    useGameStore();
+  const { games, currentGame, continueGame, deleteGame, hydrated } = useGameStore();
 
   const previousGames = [...games].sort(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
@@ -24,12 +24,12 @@ export default function HomePage() {
       title="Skull King"
       actions={
         <div className="space-y-3">
-          <ParchmentButton icon="+" onClick={() => router.push("/setup")}>
+          <ParchmentButton icon={<Plus className="h-5 w-5" strokeWidth={2.5} />} onClick={() => router.push("/setup")}>
             New Game
           </ParchmentButton>
           <ParchmentButton
             disabled={!canContinue}
-            icon=">"
+            icon={<Play className="h-5 w-5" strokeWidth={2.5} />}
             onClick={() => canContinue && router.push("/round")}
             variant="secondary"
           >
@@ -40,17 +40,13 @@ export default function HomePage() {
     >
       <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(240,199,99,0.18),transparent_32%),linear-gradient(180deg,rgba(7,18,30,0.2),rgba(7,18,30,0.4))] p-5 text-center">
         <img
+          alt="Skull King mark"
+          className="signal-pulse mx-auto h-24 w-24 rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 object-cover"
           src="/skullking.png"
-          alt="skullking"
-          className="signal-pulse bg-cover mx-auto grid h-24 w-24 place-items-center rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 text-4xl font-black text-[#fff0be]"
         />
-
-        <p className="mt-4 font-display text-4xl text-[#fff0be]">
-          Score Tracker
-        </p>
+        <p className="mt-4 font-display text-4xl text-[#fff0be]">Score Tracker</p>
         <p className="mt-2 text-sm leading-6 text-[#93b9d2]">
-          Track rounds, bids, tricks, and bonuses in a mobile-first pirate
-          shell.
+          Track rounds, bids, tricks, and bonuses in a mobile-first pirate shell.
         </p>
       </div>
 
@@ -81,9 +77,7 @@ export default function HomePage() {
                     className="flex w-full items-center gap-3 text-left"
                     onClick={() => {
                       continueGame(game.id);
-                      router.push(
-                        game.status === "finished" ? "/finished" : "/round",
-                      );
+                      router.push(game.status === "finished" ? "/finished" : "/round");
                     }}
                     type="button"
                   >
@@ -101,7 +95,8 @@ export default function HomePage() {
                         {getGameSubtitle(game)}
                       </p>
                     </div>
-                    <span className="rounded-full bg-[#f3c85e]/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#f3c85e]">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-[#f3c85e]/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#f3c85e]">
+                      <FolderOpen className="h-3.5 w-3.5" strokeWidth={2.25} />
                       {game.status === "finished" ? "Open" : "Resume"}
                     </span>
                   </button>
@@ -110,10 +105,11 @@ export default function HomePage() {
                       {isCurrent ? "Current game" : "Saved game"}
                     </p>
                     <button
-                      className="rounded-full border border-[#ff9a80]/30 bg-[#ff9a80]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#ffd5ca]"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#ff9a80]/30 bg-[#ff9a80]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#ffd5ca]"
                       onClick={() => deleteGame(game.id)}
                       type="button"
                     >
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={2.25} />
                       Delete
                     </button>
                   </div>

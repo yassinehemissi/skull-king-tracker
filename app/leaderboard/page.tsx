@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { ArrowRight, TableProperties, Trophy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { LeaderboardItem } from "@/components/LeaderboardItem";
@@ -35,10 +36,13 @@ function LeaderboardView() {
       title="Leaderboard"
       actions={
         <div className="space-y-3">
-          <ParchmentButton icon={currentGame.status === "finished" ? "END" : "->"} onClick={() => router.push(nextRoute)}>
+          <ParchmentButton
+            icon={currentGame.status === "finished" ? <Trophy className="h-5 w-5" strokeWidth={2.5} /> : <ArrowRight className="h-5 w-5" strokeWidth={2.5} />}
+            onClick={() => router.push(nextRoute)}
+          >
             {currentGame.status === "finished" ? "Finish Game" : "Next Round"}
           </ParchmentButton>
-          <ParchmentButton icon="TAB" onClick={() => router.push("/scores")} variant="secondary">
+          <ParchmentButton icon={<TableProperties className="h-5 w-5" strokeWidth={2.5} />} onClick={() => router.push("/scores")} variant="secondary">
             Full Score Table
           </ParchmentButton>
         </div>

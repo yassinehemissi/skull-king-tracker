@@ -96,3 +96,12 @@ a {
   image-rendering: pixelated;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Masquer la barre pour Firefox, IE et Edge */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;     /* Firefox */
+}

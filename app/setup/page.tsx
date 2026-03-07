@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Check, Minus, Pencil, Plus, UserPlus, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
@@ -40,7 +41,7 @@ export default function SetupPage() {
   }
 
   function addPlayer() {
-    if (players.length >= 8) {
+    if (players.length >= 10) {
       return;
     }
 
@@ -73,7 +74,7 @@ export default function SetupPage() {
         actions={
           <ParchmentButton
             disabled={!canStart}
-            icon="GO"
+            icon={<Check className="h-5 w-5" strokeWidth={2.5} />}
             onClick={() => {
               const game = startGame(
                 readyPlayers.map((player) => ({ ...player, name: player.name.trim() })),
@@ -109,19 +110,22 @@ export default function SetupPage() {
                   value={player.name}
                 />
                 <button
-                  className="mt-1 text-[11px] uppercase tracking-[0.18em] text-[#76b9dc]"
+                  className="mt-1 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#76b9dc]"
                   onClick={() => setPickerPlayerId(player.id)}
                   type="button"
                 >
-                  {player.role} · Change avatar
+                  <Pencil className="h-3.5 w-3.5" strokeWidth={2.25} />
+                  {player.role}
+                  <span>Change avatar</span>
                 </button>
               </div>
               <button
-                className="rounded-full bg-white/[0.08] px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#f3c85e] disabled:opacity-40"
+                className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#f3c85e] disabled:opacity-40"
                 disabled={players.length <= 2}
                 onClick={() => removePlayer(player.id)}
                 type="button"
               >
+                <X className="h-3.5 w-3.5" strokeWidth={2.25} />
                 Cut
               </button>
             </div>
@@ -129,12 +133,12 @@ export default function SetupPage() {
         </div>
 
         <button
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-[1.4rem] border-2 border-dashed border-[#73c7f7]/30 bg-[rgba(115,199,247,0.06)] px-4 py-4 text-sm font-black uppercase tracking-[0.18em] text-[#87d5ff] disabled:opacity-40"
-          disabled={players.length >= 8}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[1.4rem] border-2 border-dashed border-[#73c7f7]/30 bg-[rgba(115,199,247,0.06)] px-4 py-4 text-sm font-black uppercase tracking-[0.18em] text-[#87d5ff] disabled:opacity-40"
+          disabled={players.length >= 10}
           onClick={addPlayer}
           type="button"
         >
-          <span>+</span>
+          <UserPlus className="h-4.5 w-4.5" strokeWidth={2.25} />
           <span>Add Player</span>
         </button>
 
@@ -145,7 +149,7 @@ export default function SetupPage() {
                 Number of Rounds
               </p>
               <p className="text-xs uppercase tracking-[0.18em] text-[#7db5d6]">
-                2 to 8 players, default game length is 10 rounds
+                2 to 10 players, default game length is 10 rounds
               </p>
             </div>
             <div className="flex items-center gap-2 rounded-full border border-white/10 bg-[#0e2538] p-1">
@@ -155,7 +159,7 @@ export default function SetupPage() {
                 onClick={() => setTotalRounds((value) => Math.max(1, value - 1))}
                 type="button"
               >
-                -
+                <Minus className="h-4 w-4" strokeWidth={2.5} />
               </button>
               <span className="min-w-8 text-center text-lg font-black text-[#fff4c9]">
                 {totalRounds}
@@ -166,7 +170,7 @@ export default function SetupPage() {
                 onClick={() => setTotalRounds((value) => Math.min(10, value + 1))}
                 type="button"
               >
-                +
+                <Plus className="h-4 w-4" strokeWidth={2.5} />
               </button>
             </div>
           </div>
@@ -192,10 +196,11 @@ export default function SetupPage() {
                 </p>
               </div>
               <button
-                className="rounded-full bg-white/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
+                className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#f3c85e]"
                 onClick={() => setPickerPlayerId(null)}
                 type="button"
               >
+                <X className="h-3.5 w-3.5" strokeWidth={2.25} />
                 Close
               </button>
             </div>
@@ -235,3 +240,5 @@ export default function SetupPage() {
     </>
   );
 }
+
+
