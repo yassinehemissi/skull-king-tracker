@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
@@ -9,7 +9,8 @@ import { getGameSubtitle, getLeaderboard } from "@/lib/game";
 
 export default function HomePage() {
   const router = useRouter();
-  const { games, currentGame, continueGame, hydrated } = useGameStore();
+  const { games, currentGame, continueGame, deleteGame, hydrated } =
+    useGameStore();
 
   const previousGames = [...games].sort(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
@@ -38,10 +39,18 @@ export default function HomePage() {
       }
     >
       <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(240,199,99,0.18),transparent_32%),linear-gradient(180deg,rgba(7,18,30,0.2),rgba(7,18,30,0.4))] p-5 text-center">
-        <img src="/skullking.png" alt="skullking" className="signal-pulse bg-cover mx-auto grid h-24 w-24 place-items-center rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 text-4xl font-black text-[#fff0be]"/>
-        <p className="mt-4 font-display text-4xl text-[#fff0be]">Score Tracker</p>
+        <img
+          src="/skullking.png"
+          alt="skullking"
+          className="signal-pulse bg-cover mx-auto grid h-24 w-24 place-items-center rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 text-4xl font-black text-[#fff0be]"
+        />
+
+        <p className="mt-4 font-display text-4xl text-[#fff0be]">
+          Score Tracker
+        </p>
         <p className="mt-2 text-sm leading-6 text-[#93b9d2]">
-          Track rounds, bids, tricks, and bonuses in a mobile-first pirate shell.
+          Track rounds, bids, tricks, and bonuses in a mobile-first pirate
+          shell.
         </p>
       </div>
 
@@ -61,35 +70,54 @@ export default function HomePage() {
           <div className="space-y-3">
             {previousGames.map((game) => {
               const leader = getLeaderboard(game)[0];
+              const isCurrent = currentGame?.id === game.id;
 
               return (
-                <button
+                <div
                   key={game.id}
-                  className="flex w-full items-center gap-3 rounded-[1.4rem] border border-white/[0.08] bg-white/5 px-4 py-4 text-left"
-                  onClick={() => {
-                    continueGame(game.id);
-                    router.push(game.status === "finished" ? "/finished" : "/round");
-                  }}
-                  type="button"
+                  className="rounded-[1.4rem] border border-white/[0.08] bg-white/5 px-4 py-4"
                 >
-                  <Avatar
-                    accent={leader?.accent ?? "#f1c45b"}
-                    icon={leader?.icon ?? "SK"}
-                    label={leader?.name ?? game.id}
-                    size="sm"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-black uppercase tracking-[0.12em] text-[#fff4d2]">
-                      {game.players.length} players
+                  <button
+                    className="flex w-full items-center gap-3 text-left"
+                    onClick={() => {
+                      continueGame(game.id);
+                      router.push(
+                        game.status === "finished" ? "/finished" : "/round",
+                      );
+                    }}
+                    type="button"
+                  >
+                    <Avatar
+                      accent={leader?.accent ?? "#f1c45b"}
+                      icon={leader?.icon ?? "SK"}
+                      label={leader?.name ?? game.id}
+                      size="sm"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-black uppercase tracking-[0.12em] text-[#fff4d2]">
+                        {game.players.length} players
+                      </p>
+                      <p className="text-xs uppercase tracking-[0.16em] text-[#84adc6]">
+                        {getGameSubtitle(game)}
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-[#f3c85e]/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#f3c85e]">
+                      {game.status === "finished" ? "Open" : "Resume"}
+                    </span>
+                  </button>
+                  <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-3">
+                    <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#7db5d6]">
+                      {isCurrent ? "Current game" : "Saved game"}
                     </p>
-                    <p className="text-xs uppercase tracking-[0.16em] text-[#84adc6]">
-                      {getGameSubtitle(game)}
-                    </p>
+                    <button
+                      className="rounded-full border border-[#ff9a80]/30 bg-[#ff9a80]/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#ffd5ca]"
+                      onClick={() => deleteGame(game.id)}
+                      type="button"
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <span className="rounded-full bg-[#f3c85e]/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#f3c85e]">
-                    {game.status === "finished" ? "Open" : "Resume"}
-                  </span>
-                </button>
+                </div>
               );
             })}
           </div>

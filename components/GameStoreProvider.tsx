@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   createContext,
@@ -18,6 +18,7 @@ type StoreShape = {
   startGame: (players: SetupPlayer[], totalRounds: number) => Game;
   submitCurrentRound: (entries: Omit<RoundEntry, "score">[]) => Game | null;
   continueGame: (gameId: string) => void;
+  deleteGame: (gameId: string) => void;
   abandonCurrentGame: () => void;
 };
 
@@ -83,6 +84,11 @@ export function GameStoreProvider({ children }: { children: ReactNode }) {
     setCurrentGameId(gameId);
   }
 
+  function deleteGame(gameId: string) {
+    setGames((prev) => prev.filter((item) => item.id !== gameId));
+    setCurrentGameId((prev) => (prev === gameId ? null : prev));
+  }
+
   function abandonCurrentGame() {
     setCurrentGameId(null);
   }
@@ -96,6 +102,7 @@ export function GameStoreProvider({ children }: { children: ReactNode }) {
         startGame,
         submitCurrentRound,
         continueGame,
+        deleteGame,
         abandonCurrentGame,
       }}
     >

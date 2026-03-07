@@ -111,8 +111,10 @@ function RoundView({
   }
 
   function maybeAdvance(field: "bid" | "won", value: number) {
-    if (field === "won" && activeIndex < currentGame.players.length - 1) {
-      onActiveIndexChange(activeIndex + 1);
+    if (currentGame){
+      if (field === "won" && activeIndex < currentGame.players.length - 1) {
+        onActiveIndexChange(activeIndex + 1);
+      }
     }
     if (field === "bid" && value === 0) {
       return;
