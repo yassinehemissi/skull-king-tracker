@@ -1,5 +1,7 @@
+import { GameStoreProvider } from "@/components/GameStoreProvider";
 import type { Metadata } from "next";
 import { Pirata_One, Space_Grotesk } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
 
 const displayFont = Pirata_One({
@@ -21,12 +23,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={`${displayFont.variable} ${bodyFont.variable} antialiased`}>
-        {children}
+        <GameStoreProvider>{children}</GameStoreProvider>
       </body>
     </html>
   );

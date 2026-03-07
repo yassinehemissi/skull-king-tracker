@@ -5,6 +5,9 @@ type ParchmentButtonProps = {
   icon?: ReactNode;
   variant?: "primary" | "secondary";
   fullWidth?: boolean;
+  href?: never;
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
 export function ParchmentButton({
@@ -12,6 +15,8 @@ export function ParchmentButton({
   icon,
   variant = "primary",
   fullWidth = true,
+  onClick,
+  disabled = false,
 }: ParchmentButtonProps) {
   const tone =
     variant === "primary"
@@ -20,7 +25,9 @@ export function ParchmentButton({
 
   return (
     <button
-      className={`pixel-frame relative overflow-hidden rounded-[1.35rem] border border-[#f6e7c3]/30 bg-gradient-to-br ${tone} px-5 py-4 text-left shadow-[0_12px_24px_rgba(0,0,0,0.26)] transition-transform duration-150 active:translate-y-[2px] ${fullWidth ? "w-full" : ""}`}
+      className={`pixel-frame relative overflow-hidden rounded-[1.35rem] border border-[#f6e7c3]/30 bg-gradient-to-br ${tone} px-5 py-4 text-left shadow-[0_12px_24px_rgba(0,0,0,0.26)] transition-transform duration-150 active:translate-y-[2px] disabled:translate-y-0 disabled:opacity-50 ${fullWidth ? "w-full" : ""}`}
+      disabled={disabled}
+      onClick={onClick}
       type="button"
     >
       <span className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_36%),linear-gradient(180deg,transparent,rgba(73,38,12,0.15))]" />

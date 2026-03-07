@@ -1,4 +1,5 @@
 import { Avatar } from "./Avatar";
+import { Stepper } from "./Ui";
 
 type PlayerInputCardProps = {
   name: string;
@@ -8,23 +9,11 @@ type PlayerInputCardProps = {
   bid: number;
   won: number;
   bonus: number;
+  cards: number;
+  onBidChange: (value: number) => void;
+  onWonChange: (value: number) => void;
+  onBonusChange: (value: number) => void;
 };
-
-function Stepper({ value }: { value: number }) {
-  return (
-    <div className="inline-flex items-center rounded-full border border-white/10 bg-[#102538]/90 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-      <button className="grid h-8 w-8 place-items-center rounded-full bg-white/[0.06] text-lg text-[#f6d37a]" type="button">
-        -
-      </button>
-      <span className="min-w-10 px-3 text-center text-base font-bold text-[#fff7dd]">
-        {value}
-      </span>
-      <button className="grid h-8 w-8 place-items-center rounded-full bg-[#f0bf4c] text-lg font-bold text-[#22160c]" type="button">
-        +
-      </button>
-    </div>
-  );
-}
 
 export function PlayerInputCard({
   name,
@@ -34,6 +23,10 @@ export function PlayerInputCard({
   bid,
   won,
   bonus,
+  cards,
+  onBidChange,
+  onWonChange,
+  onBonusChange,
 }: PlayerInputCardProps) {
   return (
     <article className="pixel-frame rounded-[1.6rem] border border-white/10 bg-[linear-gradient(180deg,rgba(14,35,54,0.96),rgba(8,21,35,0.96))] p-4 shadow-[0_20px_40px_rgba(1,8,16,0.45)]">
@@ -51,17 +44,15 @@ export function PlayerInputCard({
       <div className="space-y-3">
         <div className="flex items-center justify-between rounded-2xl bg-white/5 px-3 py-2">
           <span className="text-sm font-semibold text-[#b6d3e6]">Bid</span>
-          <Stepper value={bid} />
+          <Stepper max={cards} onChange={onBidChange} value={bid} />
         </div>
         <div className="flex items-center justify-between rounded-2xl bg-white/5 px-3 py-2">
           <span className="text-sm font-semibold text-[#b6d3e6]">Won</span>
-          <Stepper value={won} />
+          <Stepper max={cards} onChange={onWonChange} value={won} />
         </div>
         <div className="flex items-center justify-between rounded-2xl bg-white/5 px-3 py-2">
           <span className="text-sm font-semibold text-[#b6d3e6]">Bonus</span>
-          <div className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-sm font-bold text-emerald-200">
-            +{bonus}
-          </div>
+          <Stepper max={200} onChange={onBonusChange} value={bonus} />
         </div>
       </div>
     </article>
