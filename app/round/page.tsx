@@ -118,8 +118,10 @@ function RoundView({
     );
   }
 
+  const playerCount = currentGame.players.length;
+
   function maybeAdvance(field: "bid" | "won") {
-    if (field === "won" && activeIndex < currentGame.players.length - 1) {
+    if (field === "won" && activeIndex < playerCount - 1) {
       onActiveIndexChange(activeIndex + 1);
     }
   }
@@ -400,3 +402,4 @@ function FastSelectRow({
     </div>
   );
 }
+
