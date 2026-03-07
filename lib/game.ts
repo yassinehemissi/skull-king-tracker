@@ -41,9 +41,9 @@ export function createGame(players: SetupPlayer[], totalRounds: number): Game {
   };
 }
 
-export function scoreRoundEntry(entry: Pick<RoundEntry, "bid" | "won" | "bonus">) {
+export function scoreRoundEntry(entry: Pick<RoundEntry, "bid" | "won" | "bonus">, cards:number) {
   const base = entry.bid === entry.won ? entry.bid * 20 : -Math.abs(entry.bid - entry.won) * 10;
-  const zeroBid = entry.bid === 0 ? (entry.won === 0 ? 10 : -10) : 0;
+  const zeroBid = entry.bid === 0 ? (entry.won === 0 ? 10 * cards : -10 * cards) : 0;
 
   return (entry.bid === 0 ? zeroBid : base) + entry.bonus;
 }
@@ -61,7 +61,7 @@ export function submitRound(game: Game, inputs: Omit<RoundEntry, "score">[]): Ga
   const cards = roundNumber;
   const entries = inputs.map((entry) => ({
     ...entry,
-    score: scoreRoundEntry(entry),
+    score: scoreRoundEntry(entry, cards),
   }));
 
   const round: RoundRecord = {
