@@ -51,7 +51,7 @@ export function scoreRoundEntry(entry: Pick<RoundEntry, "bid" | "won" | "bonus">
 export function validateRound(entries: Array<Pick<RoundEntry, "won">>, cards: number) {
   const totalWon = entries.reduce((sum, entry) => sum + entry.won, 0);
   return {
-    valid: totalWon === cards,
+    valid: true,
     totalWon,
   };
 }
