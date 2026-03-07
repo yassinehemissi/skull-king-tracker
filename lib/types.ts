@@ -45,12 +45,12 @@ export type SetupPlayer = {
 };
 
 export const PLAYER_ROLES: PlayerRole[] = [
-  { role: "Skull King", icon: "SK", accent: "#f1c45b" },
-  { role: "Pirate Captain", icon: "PC", accent: "#ff8f70" },
-  { role: "Mermaid", icon: "ME", accent: "#73d8ff" },
-  { role: "Skeleton Pirate", icon: "SP", accent: "#d3d8df" },
-  { role: "Parrot Pirate", icon: "PR", accent: "#7ef0a3" },
-  { role: "Sea Witch", icon: "SW", accent: "#a789ff" },
-  { role: "Monkey Pirate", icon: "MP", accent: "#f5a65a" },
-  { role: "Deckhand", icon: "DK", accent: "#8fb7d2" },
+  { role: "Skull King", icon: "/2.png", accent: "#f1c45b" },
+  { role: "Pirate Captain", icon: "/3.png", accent: "#ff8f70" },
+  { role: "Mermaid", icon: "/5.png", accent: "#73d8ff" },
+  { role: "Skeleton Pirate", icon: "/2.png", accent: "#d3d8df" },
+  { role: "Parrot Pirate", icon: "/1.png", accent: "#7ef0a3" },
+  { role: "Sea Witch", icon: "/4.png", accent: "#a789ff" },
+  { role: "Monkey Pirate", icon: "/1.png", accent: "#f5a65a" },
+  { role: "Deckhand", icon: "/3.png", accent: "#8fb7d2" },
 ];

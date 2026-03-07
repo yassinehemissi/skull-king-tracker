@@ -38,9 +38,7 @@ export default function HomePage() {
       }
     >
       <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(240,199,99,0.18),transparent_32%),linear-gradient(180deg,rgba(7,18,30,0.2),rgba(7,18,30,0.4))] p-5 text-center">
-        <div className="signal-pulse mx-auto grid h-24 w-24 place-items-center rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 text-4xl font-black text-[#fff0be]">
-          SK
-        </div>
+        <img src="/skullking.png" alt="skullking" className="signal-pulse bg-cover mx-auto grid h-24 w-24 place-items-center rounded-full border border-[#f3c85e]/25 bg-[#f3c85e]/10 text-4xl font-black text-[#fff0be]"/>
         <p className="mt-4 font-display text-4xl text-[#fff0be]">Score Tracker</p>
         <p className="mt-2 text-sm leading-6 text-[#93b9d2]">
           Track rounds, bids, tricks, and bonuses in a mobile-first pirate shell.

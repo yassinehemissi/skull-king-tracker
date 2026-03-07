@@ -91,3 +91,8 @@ a {
     animation: none;
   }
 }
+
+.pixel-art {
+  image-rendering: pixelated;
+}
+

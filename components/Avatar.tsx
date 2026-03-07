@@ -11,6 +11,10 @@ const sizeClasses = {
   lg: "h-20 w-20 text-3xl",
 };
 
+function isImageIcon(icon: string) {
+  return icon.startsWith("/") || icon.endsWith(".png") || icon.endsWith(".jpg") || icon.endsWith(".webp");
+}
+
 export function Avatar({
   icon,
   label,
@@ -31,9 +35,17 @@ export function Avatar({
           backgroundSize: "8px 8px",
         }}
       />
-      <span className="relative drop-shadow-[0_3px_0_rgba(0,0,0,0.35)]">
-        {icon}
-      </span>
+      {isImageIcon(icon) ? (
+        <img
+          alt={label}
+          className="pixel-art relative h-full w-full object-cover"
+          src={icon}
+        />
+      ) : (
+        <span className="relative drop-shadow-[0_3px_0_rgba(0,0,0,0.35)]">
+          {icon}
+        </span>
+      )}
       <span
         className="absolute inset-x-2 bottom-1 h-1 rounded-full"
         style={{ backgroundColor: accent }}
